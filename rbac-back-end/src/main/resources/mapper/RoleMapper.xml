@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hust.rbacbackend.mapper.RoleMapper">
+    <resultMap id="BaseMap" type="com.hust.rbacbackend.entity.Role">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="loadRolesByUid" parameterType="Integer" resultMap="BaseMap">
+        select r.id,r.role_name
+        from role r,inner_user_role ur
+        where r.id=ur.role_id and ur.user_id=#{uid}
+    </select>
+    <insert id="addRole" parameterType="com.hust.rbacbackend.entity.Role">
+        insert into role(
+            id,role_name
+        )
+        values(
+            #{id,jdbcType=INTEGER},#{roleName,jdbcType=VARCHAR}
+        )
+    </insert>
+</mapper>
