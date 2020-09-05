@@ -35,4 +35,15 @@
         </set>
         where id=#{id}
     </update>
+    <delete id="delRole">
+        delete from inner_user_role
+        where user_id=#{uid} and role_id=#{roleId}
+    </delete>
+    <insert id="addRole">
+        insert into inner_user_role (user_id,role_id)
+        values
+        <foreach collection="roleIdList" item="roleId" separator=",">
+            (#{uid},#{roleId})
+        </foreach>
+    </insert>
 </mapper>

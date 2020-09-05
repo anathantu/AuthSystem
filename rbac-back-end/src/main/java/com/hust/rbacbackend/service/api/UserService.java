@@ -3,6 +3,8 @@ package com.hust.rbacbackend.service.api;
 import com.hust.rbacbackend.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 //public interface UserService  extends UserDetailsService {
 public interface UserService {
@@ -12,4 +14,8 @@ public interface UserService {
     public void updateUser(User user);
 
     public User loadUserByUsername(String username);
+
+    public void delRoles(Integer id,List<Integer> roleIdList);
+
+    public void addRoles(Integer id,List<Integer> roleIdList);
 }

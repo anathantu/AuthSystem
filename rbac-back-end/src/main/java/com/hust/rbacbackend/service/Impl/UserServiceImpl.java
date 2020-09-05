@@ -30,11 +30,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User queryUser(Integer uid) {
-        User user=userMapper.queryUser(uid);
-        if(user==null){
+        User user = userMapper.queryUser(uid);
+        if (user == null) {
             return null;
         }
-        List<Role> roles=roleMapper.loadRolesByUid(user.getId());
+        List<Role> roles = roleMapper.loadRolesByUid(user.getId());
         user.setRoles(roles);
         return user;
     }
@@ -47,8 +47,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public User loadUserByUsername(String username) {
         User user = userMapper.loadByUsername(username);
-        List<Role> roles=roleMapper.loadRolesByUid(user.getId());
+        List<Role> roles = roleMapper.loadRolesByUid(user.getId());
         user.setRoles(roles);
         return user;
+    }
+
+    @Override
+    public void delRoles(Integer id, List<Integer> roleIdList) {
+        User user = userMapper.queryUser(id);
+        if (user == null) {
+            throw new IllegalArgumentException("用户不存在");
+        }
+        for (Integer roleId : roleIdList) {
+            userMapper.delRole(id, roleId);
+        }
+    }
+
+    public void addRoles(Integer id, List<Integer> roleIdList) {
+        User user = userMapper.queryUser(id);
+        if (user == null) {
+            throw new IllegalArgumentException("用户不存在");
+        }
+        userMapper.addRole(id, roleIdList);
     }
 }
