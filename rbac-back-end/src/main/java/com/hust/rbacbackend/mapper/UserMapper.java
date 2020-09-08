@@ -21,4 +21,6 @@ public interface UserMapper {
     public void delRole(@Param("uid") Integer uid, @Param("roleId") Integer roleId);
 
     public void addRole(@Param("uid") Integer uid,@Param("roleIdList") List<Integer> roleIdList);
+
+    public List<User> queryAllUsers();
 }

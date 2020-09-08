@@ -30,7 +30,7 @@
         <set>
             <if test="username!=null">username=#{username},</if>
             <if test="nickname!=null">nickname=#{nickname},</if>
-            <if test="password!=null">password=#{password}</if>
+            <if test="password!=null">password=#{password},</if>
             <if test="email!=null">email=#{email}</if>
         </set>
         where id=#{id}
@@ -46,4 +46,10 @@
             (#{uid},#{roleId})
         </foreach>
     </insert>
+    <select id="queryAllUsers" resultType="com.hust.rbacbackend.entity.User">
+        select
+            id,username,nickname,
+            password,email
+        from user
+    </select>
 </mapper>

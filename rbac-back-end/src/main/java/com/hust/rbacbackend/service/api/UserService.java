@@ -17,5 +17,9 @@ public interface UserService {
 
     public void delRoles(Integer id,List<Integer> roleIdList);
 
+    public void delRoles(User user);
+
     public void addRoles(Integer id,List<Integer> roleIdList);
+
+    public List<User> queryAllUsers();
 }

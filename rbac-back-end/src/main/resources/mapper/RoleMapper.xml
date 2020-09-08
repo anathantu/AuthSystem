@@ -18,4 +18,8 @@
             #{id,jdbcType=INTEGER},#{roleName,jdbcType=VARCHAR}
         )
     </insert>
+    <select id="queryAllRoles" resultMap="BaseMap">
+        select id,role_name
+        from role
+    </select>
 </mapper>

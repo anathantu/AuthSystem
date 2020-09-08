@@ -63,11 +63,35 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void delRoles(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("用户不存在");
+        }
+        List<Role> roles = user.getRoles();
+        Integer id = user.getId();
+        for (Role r : roles) {
+            userMapper.delRole(id, r.getId());
+        }
+    }
+
     public void addRoles(Integer id, List<Integer> roleIdList) {
         User user = userMapper.queryUser(id);
         if (user == null) {
             throw new IllegalArgumentException("用户不存在");
         }
         userMapper.addRole(id, roleIdList);
+    }
+
+    @Override
+    public List<User> queryAllUsers() {
+        List<User> users = userMapper.queryAllUsers();
+
+        for (User u : users) {
+            List<Role> roles = roleMapper.loadRolesByUid(u.getId());
+            u.setRoles(roles);
+        }
+
+        return users;
     }
 }

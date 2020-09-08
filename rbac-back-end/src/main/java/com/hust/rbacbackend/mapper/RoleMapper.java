@@ -11,4 +11,6 @@ public interface RoleMapper {
     public List<Role> loadRolesByUid(Integer id);
 
     public void addRole(Role r);
+
+    public List<Role> queryAllRoles();
 }
