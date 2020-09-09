@@ -29,14 +29,15 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        System.out.println("userDetails = " + userDetails);
-
         String token=jwtUtils.generateToken(userDetails.getUsername());
+
+        response.setHeader("Authorization", token);
+        response.setHeader("Access-control-Expose-Headers", "Authorization");
 
         Map<String ,Object> map=new HashMap<>();
         map.put("username",userDetails.getUsername());
         map.put("auth",userDetails.getAuthorities());
-        map.put("token",token);
+
         JsonUtils.WriteJson(request,response, ResultInfo.success("登录成功",map));
     }
 }

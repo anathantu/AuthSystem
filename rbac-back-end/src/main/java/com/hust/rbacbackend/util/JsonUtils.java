@@ -20,7 +20,7 @@ public class JsonUtils {
         //这里很重要，否则页面获取不到正常的JSON数据集
         response.setContentType("application/json;charset=UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Method", "POST,GET");
+        response.setHeader("Access-Control-Allow-Method", "POST,GET,DELETE,PUT,OPTIONS");
         //输出JSON
         PrintWriter out = response.getWriter();
         out.write(new ObjectMapper().writeValueAsString(data));

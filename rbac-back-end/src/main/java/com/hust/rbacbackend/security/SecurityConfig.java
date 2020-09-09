@@ -34,8 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
 
-//    @Autowired
-//    MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter;
+    @Autowired
+    MyLogoutSuccessHandler myLogoutSuccessHandler;
 
     @Autowired
     JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
@@ -74,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(myAuthenticationEntryPoint)//当用户没有访问权限时的处理器，用于返回 JSON 格式的处理结果；
                 .accessDeniedHandler(myAccessDeniedHandler);//当未登录或 token 失效时，返回 JSON 格式的结果；
 
-        http.logout();
+        http.logout().logoutSuccessHandler(myLogoutSuccessHandler).permitAll();
     }
 
     @Bean
