@@ -1,0 +1,21 @@
+package com.hust.rbacbackend.security;
+
+import com.hust.rbacbackend.component.ResultInfo;
+import com.hust.rbacbackend.util.JsonUtils;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@Component
+public class MyAccessDeniedHandler implements AccessDeniedHandler {
+
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        JsonUtils.WriteJson(request,response, ResultInfo.failed("权限不足:"+accessDeniedException.getMessage()));
+    }
+}

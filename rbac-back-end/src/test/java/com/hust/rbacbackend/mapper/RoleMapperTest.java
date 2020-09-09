@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -29,5 +30,11 @@ public class RoleMapperTest {
         Role r=new Role();
         r.setRoleName("ROLE_ADMIN");
         roleMapper.addRole(r);
+    }
+
+    @Test
+    public void test(){
+        String encode = new BCryptPasswordEncoder().encode("111111");
+        System.out.println(encode);
     }
 }

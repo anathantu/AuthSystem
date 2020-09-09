@@ -6,6 +6,7 @@ import com.hust.rbacbackend.mapper.RoleMapper;
 import com.hust.rbacbackend.mapper.UserMapper;
 import com.hust.rbacbackend.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,15 +19,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RoleMapper roleMapper;
-
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = userMapper.loadByUsername(username);
-//        List<Role> roles=roleMapper.loadRolesByUid(user.getId());
-//        user.setRoles(roles);
-//        return user;
-//    }
-
 
     @Override
     public User queryUser(Integer uid) {
@@ -46,7 +38,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User loadUserByUsername(String username) {
+        if(username==null){
+            throw new UsernameNotFoundException("用户名不能为空");
+        }
         User user = userMapper.loadByUsername(username);
+        if(user==null){
+            throw new IllegalArgumentException("用户不存在");
+        }
         List<Role> roles = roleMapper.loadRolesByUid(user.getId());
         user.setRoles(roles);
         return user;

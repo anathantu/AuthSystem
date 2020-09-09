@@ -13,7 +13,7 @@ public class ResultInfo implements Serializable {
 
     private Object data;
 
-    public static ResultInfo success(Integer code,String msg,Object data){
+    public static ResultInfo failed(Integer code,String msg,Object data){
         ResultInfo resultInfo=new ResultInfo();
         resultInfo.setStatus(code);
         resultInfo.setMsg(msg);
@@ -21,7 +21,15 @@ public class ResultInfo implements Serializable {
         return resultInfo;
     }
 
-    public static ResultInfo failed(Integer code,String msg,Object data){
+    public static ResultInfo failed(String msg,Object data){
+        return failed(400,msg,data);
+    }
+
+    public static ResultInfo failed(String msg){
+        return failed(msg,null);
+    }
+
+    public static ResultInfo success(Integer code,String msg,Object data){
         ResultInfo resultInfo=new ResultInfo();
         resultInfo.setStatus(code);
         resultInfo.setMsg(msg);

@@ -20,6 +20,4 @@ public class RoleController {
         List<Role> roles=roleService.queryAllRoles();
         return ResultInfo.success(200,"查询角色成功",roles);
     }
-
-    
 }

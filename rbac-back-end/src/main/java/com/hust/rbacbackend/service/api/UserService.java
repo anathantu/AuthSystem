@@ -1,13 +1,11 @@
 package com.hust.rbacbackend.service.api;
 
 import com.hust.rbacbackend.entity.User;
-import org.springframework.stereotype.Service;
-
+import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 
-//public interface UserService  extends UserDetailsService {
-public interface UserService {
+public interface UserService  extends UserDetailsService {
 
     public User queryUser(Integer uid);
 
