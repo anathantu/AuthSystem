@@ -1,5 +1,6 @@
 package com.hust.rbacbackend.security;
 
+import com.hust.rbacbackend.component.ResultInfo;
 import com.hust.rbacbackend.util.JsonUtils;
 import com.hust.rbacbackend.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,6 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         map.put("username",userDetails.getUsername());
         map.put("auth",userDetails.getAuthorities());
         map.put("token",token);
-        JsonUtils.WriteJson(request,response,token);
+        JsonUtils.WriteJson(request,response, ResultInfo.success("登录成功",map));
     }
 }
