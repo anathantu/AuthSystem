@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -16,6 +17,9 @@ import java.util.List;
 public class RoleMapperTest {
     @Autowired
     RoleMapper roleMapper;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
 
     @Test
     public void testLoadRolesByUid(){
@@ -36,5 +40,16 @@ public class RoleMapperTest {
     public void test(){
         String encode = new BCryptPasswordEncoder().encode("111111");
         System.out.println(encode);
+    }
+
+    @Test
+    public void testSet() {
+        stringRedisTemplate.opsForValue().set("test-string-value", "Hello Redis");
+    }
+
+    @Test
+    public void testGet() {
+        String value = stringRedisTemplate.opsForValue().get("test-string-value");
+        System.out.println(value);
     }
 }

@@ -4,6 +4,7 @@ import com.hust.rbacbackend.component.ResultInfo;
 import com.hust.rbacbackend.util.JsonUtils;
 import com.hust.rbacbackend.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,13 +24,20 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         //取得账号信息
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token=jwtUtils.generateToken(userDetails.getUsername());
+        String token=stringRedisTemplate.opsForValue().get(userDetails.getUsername());
+        if(token==null){
+            token=jwtUtils.generateToken(userDetails.getUsername());
+            stringRedisTemplate.opsForValue().set(userDetails.getUsername(),token);
+        }
 
         response.setHeader("Authorization", token);
         response.setHeader("Access-control-Expose-Headers", "Authorization");
